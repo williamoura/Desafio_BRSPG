@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desafio_BRSPG.Api", "Desafio_BRSPG.Api\Desafio_BRSPG.Api.csproj", "{BDBE9B1B-5AF9-4825-BC6E-3ADAE51D5D15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDBE9B1B-5AF9-4825-BC6E-3ADAE51D5D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDBE9B1B-5AF9-4825-BC6E-3ADAE51D5D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDBE9B1B-5AF9-4825-BC6E-3ADAE51D5D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDBE9B1B-5AF9-4825-BC6E-3ADAE51D5D15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98A3EDDE-9DE6-48FE-A87F-16F4CFC3F1BD}
+	EndGlobalSection
+EndGlobal
