@@ -2,26 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Desafio_BRSPG.Api.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Desafio_BRSPG.Api.Models
+namespace Desafio_BRSPG.Api.Controllers
 {
-    public class MDR
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MdrController : ControllerBase
     {
-        public MDR()
-        {
-            Create();
-        }
-        
-        public IList<AdquirenteMDR> Adquirentes { get; private set; }
+        private readonly MDRContext mDRContext;
 
-        private void Create()
+        public MdrController(MDRContext mDRContext)
         {
-            Adquirentes = new List<AdquirenteMDR>
+            this.mDRContext = mDRContext;
+
+            if (mDRContext.AdquirenteMDRItems.Count() == 0)
             {
-                new AdquirenteMDR
-                {
-                    Adquirente = "Adquirente A",
-                    Taxas = new List<Taxa>
+                // Create a new TodoItem if collection is empty,
+                // which means you can't delete all TodoItems.
+                AddAdquirentes(mDRContext);
+
+                mDRContext.SaveChanges();
+            }
+
+        }
+
+        private static void AddAdquirentes(MDRContext mDRContext)
+        {
+            mDRContext.AdquirenteMDRItems.Add(new AdquirenteMDR
+            {
+                Adquirente = "Adquirente A",
+                Taxas = new List<Taxa>
                     {
                         new Taxa
                         {
@@ -36,11 +49,12 @@ namespace Desafio_BRSPG.Api.Models
                             Debito = (decimal)1.98
                         }
                     }
-                },
-                new AdquirenteMDR
-                {
-                    Adquirente = "Adquirente B",
-                    Taxas = new List<Taxa>
+            });
+
+            mDRContext.AdquirenteMDRItems.Add(new AdquirenteMDR
+            {
+                Adquirente = "Adquirente B",
+                Taxas = new List<Taxa>
                     {
                         new Taxa
                         {
@@ -55,11 +69,13 @@ namespace Desafio_BRSPG.Api.Models
                             Debito = (decimal)1.75
                         }
                     }
-                },
-                new AdquirenteMDR
-                {
-                    Adquirente = "Adquirente C",
-                    Taxas = new List<Taxa>
+            });
+
+
+            mDRContext.AdquirenteMDRItems.Add(new AdquirenteMDR
+            {
+                Adquirente = "Adquirente C",
+                Taxas = new List<Taxa>
                     {
                         new Taxa
                         {
@@ -74,9 +90,7 @@ namespace Desafio_BRSPG.Api.Models
                             Debito = (decimal)1.58
                         }
                     }
-                }
-            };
+            });
         }
-
     }
 }
