@@ -10,27 +10,18 @@ namespace Desafio_BRSPG.Api.Controllers
     [ApiController]
     public class DesafioController : ControllerBase
     {
-        private readonly MDRContext mDRContext;
+        private readonly MDR mDR;
 
-        public DesafioController(MDRContext mDRContext)
+        public DesafioController(MDR mDR)
         {
-            this.mDRContext = mDRContext;
-
-            if (mDRContext.AdquirenteMDRItems.Count() == 0)
-            {
-                // Create a new TodoItem if collection is empty,
-                // which means you can't delete all TodoItems.
-                AddAdquirentes(mDRContext);
-
-                mDRContext.SaveChanges();
-            }
+            this.mDR = mDR;
         }
         
         [HttpGet]
         [Route("mdr")]
         public ActionResult<IList<AdquirenteMDR>> GetMdr()
         {
-            return mDRContext.AdquirenteMDRItems.ToList();
+            return mDR.Adquirentes.ToList();
         }
 
         [HttpPost]
@@ -50,7 +41,7 @@ namespace Desafio_BRSPG.Api.Controllers
                 !string.Equals(transacao.Tipo, "debito", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentCustomException("Os tipos de transação são 'Credito' e 'Debito'",$"Por favor revise o tipo enviado: {transacao.Tipo}");
 
-            var adquirente = mDRContext.AdquirenteMDRItems.SingleOrDefault(x => string.Equals(x.Adquirente[x.Adquirente.Length - 1].ToString(), transacao.Adquirente, StringComparison.OrdinalIgnoreCase));
+            var adquirente = mDR.Adquirentes.SingleOrDefault(x => string.Equals(x.Adquirente[x.Adquirente.Length - 1].ToString(), transacao.Adquirente, StringComparison.OrdinalIgnoreCase));
 
             if (adquirente == null)
                 throw new NotFoundCustomException("O adquirente não foi encontrado", $"Por favor revise o adquirente enviado: {transacao.Adquirente}");
@@ -73,70 +64,6 @@ namespace Desafio_BRSPG.Api.Controllers
         {
             decimal resultado = valor - ((taxa / 100) * valor);
             return resultado;
-        }
-
-        private static void AddAdquirentes(MDRContext mDRContext)
-        {
-            mDRContext.AdquirenteMDRItems.Add(new AdquirenteMDR
-            {
-                Adquirente = "Adquirente A",
-                Taxas = new List<Taxa>
-                    {
-                        new Taxa
-                        {
-                            Bandeira = "Visa",
-                            Credito = (decimal)2.25,
-                            Debito = (decimal)2.00
-                        },
-                        new Taxa
-                        {
-                            Bandeira = "Master",
-                            Credito = (decimal)2.35,
-                            Debito = (decimal)1.98
-                        }
-                    }
-            });
-
-            mDRContext.AdquirenteMDRItems.Add(new AdquirenteMDR
-            {
-                Adquirente = "Adquirente B",
-                Taxas = new List<Taxa>
-                    {
-                        new Taxa
-                        {
-                            Bandeira = "Visa",
-                            Credito = (decimal)2.50,
-                            Debito = (decimal)2.08
-                        },
-                        new Taxa
-                        {
-                            Bandeira = "Master",
-                            Credito = (decimal)2.65,
-                            Debito = (decimal)1.75
-                        }
-                    }
-            });
-
-
-            mDRContext.AdquirenteMDRItems.Add(new AdquirenteMDR
-            {
-                Adquirente = "Adquirente C",
-                Taxas = new List<Taxa>
-                    {
-                        new Taxa
-                        {
-                            Bandeira = "Visa",
-                            Credito = (decimal)2.75,
-                            Debito = (decimal)2.16
-                        },
-                        new Taxa
-                        {
-                            Bandeira = "Master",
-                            Credito = (decimal)3.10,
-                            Debito = (decimal)1.58
-                        }
-                    }
-            });
         }
     }
 }
